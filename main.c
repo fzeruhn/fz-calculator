@@ -11,13 +11,13 @@ void main(){
 
 	start:
 	printf("Enter an operation to use (+,-,*,/): ");
-	scanf(" %c", oper);
+	scanf(" %c", &oper);
 
 	printf("Enter first number for calculations: ");
-	scanf(" %d", num1);
+	scanf(" %d", &num1);
 
 	printf("Enter second number for calculations: ");
-	scanf(" %d", num2);
+	scanf(" %d", &num2);
 
 	switch(oper){
 		case '+':
