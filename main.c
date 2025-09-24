@@ -30,8 +30,13 @@ void main(){
 			result = multiplication(num1, num2);
 			break;
 		case '/':
-			result = division(num1, num2);
-			break;
+			if(num2 != 0){
+				result = division(num1, num2);
+				break;
+			}else{
+				printf("Error: Cannot divide by zero\n");
+				goto start;
+			}
 		default:
 			printf("Invalid operation\n");
 			goto start;
