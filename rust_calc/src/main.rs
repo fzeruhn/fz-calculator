@@ -11,18 +11,30 @@ fn main() {
 	let c: char = input.trim().chars().next().unwrap();
 
 	let mut input2 = String::new();
-	println!("Enter two numbers to use in equation, space seperated: ");
+	println!("Enter first number to be used in equation: ");
 	io::stdin()
 		.read_line(&mut input2)
 		.expect("Failed to read line");
-	//Parse the two numbers into sperate ints
-	let num1, num2;
+	let num1: i32 = input2.trim().parse().expect("Enter a valid int");
 
-	match c{
-		'+' => calculator::addition(),
-		'-' => calculator::subtraction(),
-		'*' => calculator::multiplication(),
-		'/' => calculator::division(),
-		_ => println!("Invalid action!"),
-	}
+	let mut input3 = String::new();
+	println!("Enter second number to be used in equation: ");
+		io::stdin()
+		.read_line(&mut input3)
+		.expect("Failed to read line");
+	let num2: i32 = input3.trim().parse().expect("Enter a valid int");
+
+	println!("Function to calculate is: {} {} {}", num1, c, num2);
+
+	let result = match c{
+		'+' => calculator::addition(num1, num2),
+		'-' => calculator::subtraction(num1, num2),
+		'*' => calculator::multiplication(num1, num2),
+		'/' => calculator::division(num1, num2),
+		_ => {
+			println!("Invalid action!");
+			return;
+		}
+	};
+	println!("Result is: {}", result);
 }
