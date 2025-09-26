@@ -8,7 +8,7 @@ fn main() {
 	io::stdin().read_line(&mut ins).expect("Failed to read line");
 
 	let mut num1: i32 = 0;
-	let mut num2: i32 = 0;
+	let mut num2: i32;
 	let mut focus: i32;
 	let mut num_string = String::new();
 	let mut func: char = ' ';
@@ -19,16 +19,18 @@ fn main() {
 		//If char is a digit
 		if c.is_digit(10){
 			num_string.push(c);
-		//If is a space
-		} else if c.is_whitespace() {
-			if num_string.is_empty(){
-				continue;
+		} else {
+			//If not digit and not whitespace, assume is function
+			if !c.is_whitespace(){
+				func = c;
 			}
-			if focus == 1{ 
+
+			if !num_string.is_empty() && focus == 1 {
 				num1 = num_string.parse().unwrap();
 				num_string.clear();
-				focus = 2;
-			} else {
+				focus = 2
+			//If second number is complete, calculate and set num1 to result
+			} else if !num_string.is_empty() && focus == 2 {
 				num2 = num_string.parse().unwrap();
 				num_string.clear();
 				focus = 1;
@@ -41,12 +43,12 @@ fn main() {
 						println!("Invalid action!");
 						return;
 					}
-				};
+				}
+			//If whitespace
+			} else {
+				continue;
 			}
-		//Assume char is a function
-		} else {
-			func = c;
-		}	
+		}
 	}
 	println!("Result is: {}", num1);
 }
