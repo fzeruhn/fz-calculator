@@ -3,38 +3,50 @@ mod calculator;
 
 fn main() {
 
-	let mut input = String::new();
-	println!("Enter an action (+|-|*|/): ");
-	io::stdin()
-		.read_line(&mut input)
-		.expect("Failed to read line");
-	let c: char = input.trim().chars().next().unwrap();
+	let mut ins = String::new();
+	println!("Enter an equation to calculate: ");
+	io::stdin().read_line(&mut ins).expect("Failed to read line");
 
-	let mut input2 = String::new();
-	println!("Enter first number to be used in equation: ");
-	io::stdin()
-		.read_line(&mut input2)
-		.expect("Failed to read line");
-	let num1: i32 = input2.trim().parse().expect("Enter a valid int");
+	let mut num1: i32 = 0;
+	let mut num2: i32 = 0;
+	let mut focus: i32;
+	let mut num_string = String::new();
+	let mut func: char = ' ';
 
-	let mut input3 = String::new();
-	println!("Enter second number to be used in equation: ");
-		io::stdin()
-		.read_line(&mut input3)
-		.expect("Failed to read line");
-	let num2: i32 = input3.trim().parse().expect("Enter a valid int");
+	focus = 1;
 
-	println!("Function to calculate is: {} {} {}", num1, c, num2);
-
-	let result = match c{
-		'+' => calculator::addition(num1, num2),
-		'-' => calculator::subtraction(num1, num2),
-		'*' => calculator::multiplication(num1, num2),
-		'/' => calculator::division(num1, num2),
-		_ => {
-			println!("Invalid action!");
-			return;
-		}
-	};
-	println!("Result is: {}", result);
+	for c in ins.chars(){
+		//If char is a digit
+		if c.is_digit(10){
+			num_string.push(c);
+		//If is a space
+		} else if c.is_whitespace() {
+			if num_string.is_empty(){
+				continue;
+			}
+			if focus == 1{ 
+				num1 = num_string.parse().unwrap();
+				num_string.clear();
+				focus = 2;
+			} else {
+				num2 = num_string.parse().unwrap();
+				num_string.clear();
+				focus = 1;
+				num1 = match func{
+					'+' => calculator::addition(num1, num2),
+					'-' => calculator::subtraction(num1, num2),
+					'*' => calculator::multiplication(num1, num2),
+					'/' => calculator::division(num1, num2),
+					_ => {
+						println!("Invalid action!");
+						return;
+					}
+				};
+			}
+		//Assume char is a function
+		} else {
+			func = c;
+		}	
+	}
+	println!("Result is: {}", num1);
 }
