@@ -1,6 +1,6 @@
 # fz-calculator
 Simple command-line calculator.
-A personal calculator project meant to help me learn the functions of git and C programming.
+A personal calculator project meant to help me learn the functions of git and Rust programming.
 
 ---
 
